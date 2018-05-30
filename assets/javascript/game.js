@@ -1,5 +1,6 @@
 let winCount = 0;
 let lossCount = 0;
+let incorrectGuesses = [];
 let lettersGuessed = [];
 let lives = 6;
 let remainingLetters = [];
@@ -199,13 +200,6 @@ function createBlanks() {
   console.log(answerArray);
 }
 
-//Remove commas from Answer Array
-
-function blankCommaRemoval() {
-answerArrayDisplay = answerArray.join(" ");
-
-}
-
 //Replacing Blank with Correct Letter
 
 function replaceArray() {
@@ -220,6 +214,11 @@ function replaceArray() {
 }
 }
 
+
+window.onkeydown = function(e) { 
+  return !(e.keyCode == 32);
+};
+
 //Display Array and Game Stats
 
 function displayGame() {
@@ -233,13 +232,13 @@ function displayGame() {
 
   let game = document.getElementById('game');
       game.innerHTML = `
-        <div>Letters Guessed: ${lettersGuessed}</div>
-        <div>Remaining Letters: ${remainingLetters}</div><br>
+        <div>Incorrect Letters Guessed: ${incorrectGuesses}</div>
         <div>Lives: ${lives}</div>
         <div>Wins: ${winCount}</div>
         <div>Losses: ${lossCount}</div>
         `
 }
+
 
 function displayImage() {
     cI = possibleWords.indexOf(word);
@@ -250,11 +249,10 @@ function displayImage() {
 //Reset Stats Function
 
 function resetStats() {
-  lives = 5;
+  lives = 6;
+  incorrectGuesses = [];
   lettersGuessed = [];
   remainingLetters = [];
-  createWord();
-  createBlanks();
 }
 
 //Game and Input While the word has not been guessed
@@ -264,38 +262,56 @@ function resetStats() {
     userGuess = userGuess.toUpperCase();
     console.log("User Guesses: " + userGuess);
   
-    if (userGuess.length !==1 || !isNaN(userGuess) || lettersGuessed.includes(userGuess)) {
-      return;
+    while (lives>0) {
+      if (userGuess.length !== 1 || incorrectGuesses.includes(userGuess) || lettersGuessed.includes(userGuess)) {
+          return;
+        }
+      if (word.includes(userGuess)) {
+          // incorrectGuesses.push(userGuess);
+          replaceArray();
+          lettersGuessed.push(userGuess);
+          displayGame();
+        }
+      if (word.includes(userGuess) === false) {
+          lives--
+          incorrectGuesses.push(userGuess);
+          lettersGuessed.push(userGuess);
+          displayGame();
+        }
+        if (remainingLetters === 0) {
+          break;
+        }
     }
-
-    if (word.includes(userGuess) === false && lives > 0) {
-      lives--
-      lettersGuessed.push(userGuess);
-      displayGame();
-    }
-
-    if (lives === 0) {
-      alert("You have lost, the character was: " + word + "!");
-      displayImage();
-      lossCount++;
-      resetStats();
-      displayGame();
-    }
-
-    if (word.includes(userGuess)) {
-      lettersGuessed.push(userGuess);
+    
+    if (remainingLetters === 0) {
       replaceArray();
       displayGame();
-    }
-
-    if (remainingLetters === 0) {
-      alert("Congratulations!  You win, the character was: " + word + "!");
+      alert("You win, the character was: " + word + "!");
       displayImage();
       winCount++;
       resetStats();
+      createWord();
+      createBlanks();
       displayGame();
-
+      let instructions = document.getElementById('instructions');
+      instructions.innerHTML = `
+        <div style: "font-weight:bold";>Press a letter to play again!</div>
+        `
     }
 
-  
-}
+    else if (remainingLetters !== 0) {
+      replaceArray();
+      displayGame();
+      alert("You died, the character was: " + word + "!");
+      displayImage();
+      lossCount++;
+      resetStats();
+      createWord();
+      createBlanks();
+      displayGame();
+      let instructions = document.getElementById('instructions');
+      instructions.innerHTML = `
+        <div style: "font-weight:bold";>Press a letter to try again!</div>
+        `
+    }
+    }
