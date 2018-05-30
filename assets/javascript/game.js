@@ -169,16 +169,23 @@ let possibleWords = [
     "FALSTAD"
 ];
 
-
 //Choose Random Word on startup and create Game Interface
 
 console.log(possibleWords);
 
+//Starting Functions
 window.onload = function() {
   createWord();
   createBlanks();
   displayGame();
+  welcome.play();
 }
+
+//Audio Functions
+//Welcome
+let welcome = new Audio("assets/sounds/GoblinVO_Deckard_008.mp3");
+let win = new Audio("assets/sounds/GoblinVO_Deckard_018.mp3");
+let loss = new Audio("assets/sounds/0_CreepVO_RavenKing_082.mp3");
 
 //Randomize Word Function
 
@@ -214,7 +221,7 @@ function replaceArray() {
 }
 }
 
-
+//Prevent Space Bar from Scrolling Page
 window.onkeydown = function(e) { 
   return !(e.keyCode == 32);
 };
@@ -239,7 +246,7 @@ function displayGame() {
         `
 }
 
-
+//Update Word Image 
 function displayImage() {
     cI = possibleWords.indexOf(word);
     console.log("Image Index: " + cI);
@@ -286,6 +293,7 @@ function resetStats() {
     if (remainingLetters === 0) {
       replaceArray();
       displayGame();
+      win.play();
       alert("You win, the character was: " + word + "!");
       displayImage();
       winCount++;
@@ -302,6 +310,7 @@ function resetStats() {
     else if (remainingLetters !== 0) {
       replaceArray();
       displayGame();
+      loss.play();
       alert("You died, the character was: " + word + "!");
       displayImage();
       lossCount++;
