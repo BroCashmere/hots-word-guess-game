@@ -72,7 +72,7 @@ let hotsImages = [
   "https://blzmedia-a.akamaihd.net/heroes/malfurion/bust.jpg",
   "https://blzmedia-a.akamaihd.net/heroes/kerrigan/bust.jpg",
   "https://blzmedia-a.akamaihd.net/heroes/tyrael/bust.jpg",
-  "https://blzmedia-a.akamaihd.net/heroes/sonya/bust.jpg",
+  "https://scontent.xx.fbcdn.net/v/t1.15752-0/p280x280/34067451_10105909090407284_52716007684308992_n.jpg?_nc_cat=0&_nc_ad=z-m&_nc_cid=0&oh=306d04ddc57e36b6e8530b9a86dbd027&oe=5B7F4DED",
   "https://blzmedia-a.akamaihd.net/heroes/valla/bust.jpg",
   "https://blzmedia-a.akamaihd.net/heroes/etc/bust.jpg",
   "https://blzmedia-a.akamaihd.net/heroes/gazlowe/bust.jpg",
