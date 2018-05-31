@@ -31,3 +31,11 @@ body {
     background-color: black;
     color: white;
 }
+
+#footer {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    bottom: 0;
+
+}
